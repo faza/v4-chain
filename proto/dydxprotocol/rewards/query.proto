@@ -4,6 +4,7 @@ package dydxprotocol.rewards;
 import "gogoproto/gogo.proto";
 import "google/api/annotations.proto";
 import "dydxprotocol/rewards/params.proto";
+import "cosmos/base/v1beta1/coin.proto";
 
 option go_package = "github.com/dydxprotocol/v4-chain/protocol/x/rewards/types";
 
@@ -13,6 +14,11 @@ service Query {
   rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
     option (google.api.http).get = "/dydxprotocol/v4/rewards/params";
   }
+
+  // Queries the Total circulating supply.
+  rpc TotalSupply(QueryTotalSupplyRequest) returns (QueryTotalSupplyResponse) {
+    option (google.api.http).get = "/dydxprotocol/v4/rewards/total_supply";
+  }
 }
 
 // QueryParamsRequest is a request type for the Params RPC method.
@@ -21,4 +27,14 @@ message QueryParamsRequest {}
 // QueryParamsResponse is a response type for the Params RPC method.
 message QueryParamsResponse {
   Params params = 1 [ (gogoproto.nullable) = false ];
+}
+
+// QueryTotalSupplyRequest is a request type for the TotalSupply RPC method.
+message QueryTotalSupplyRequest {}
+
+// QueryTotalSupplyResponse is a response type for the TotalSupply RPC method.
+message QueryTotalSupplyResponse {
+  // supply is the supply of the coins
+  repeated cosmos.base.v1beta1.Coin supply = 1
+      [(gogoproto.nullable) = false, (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins"];
 }

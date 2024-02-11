@@ -2,6 +2,7 @@ package types
 
 import (
 	"context"
+
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	assets "github.com/dydxprotocol/v4-chain/protocol/x/assets/types"
 	prices "github.com/dydxprotocol/v4-chain/protocol/x/prices/types"
@@ -16,6 +17,7 @@ type BankKeeper interface {
 		recipientAddr sdk.AccAddress,
 		amt sdk.Coins,
 	) error
+	GetSupply(ctx context.Context, denom string) sdk.Coin
 }
 
 type FeeTiersKeeper interface {
